@@ -5,19 +5,13 @@ import dynamic from "next/dynamic";
 // import { Document, Page, Text, Image } from "@react-pdf/renderer";
 import { Suspense } from "react";
 
-const PDFViewer = dynamic(
-  () => import("@react-pdf/renderer").then((mod) => mod.PDFViewer),
-  {
-    ssr: false,
-  }
-);
+const PDFDownloadLink = dynamic(() => import("./pdfviewer"), {
+  ssr: false,
+});
 
-const PDFDownloadLink = dynamic(
-  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
-  {
-    ssr: false,
-  }
-);
+const PDFViewer = dynamic(() => import("./viewer"), {
+  ssr: false,
+});
 export default function Home() {
   const doc = (
     <Document>
@@ -36,10 +30,9 @@ export default function Home() {
 
   return (
     <div>
-      {/* <Suspense fallback={<div>Loading preview...</div>}>
-
+      <Suspense fallback={<div>Loading preview...</div>}>
         <PDFViewer className="w-full h-svh">{doc}</PDFViewer>
-      </Suspense> */}
+      </Suspense>
 
       <PDFDownloadLink document={doc}>Download</PDFDownloadLink>
     </div>
