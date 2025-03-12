@@ -1,17 +1,18 @@
 "use client";
 
-import { Document, Image, Page, Text } from "@react-pdf/renderer";
+import {
+  Document,
+  Image,
+  Page,
+  PDFDownloadLink,
+  PDFViewer,
+  Text,
+} from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 // import { Document, Page, Text, Image } from "@react-pdf/renderer";
 import { Suspense } from "react";
+import { ClientOnly } from "./clientOnly";
 
-const PDFDownloadLink = dynamic(() => import("./pdfviewer"), {
-  ssr: false,
-});
-
-const PDFViewer = dynamic(() => import("./viewer"), {
-  ssr: false,
-});
 export default function Home() {
   const doc = (
     <Document>
@@ -30,11 +31,13 @@ export default function Home() {
 
   return (
     <div>
-      <Suspense fallback={<div>Loading preview...</div>}>
+      <ClientOnly>
         <PDFViewer className="w-full h-svh">{doc}</PDFViewer>
-      </Suspense>
+      </ClientOnly>
 
-      <PDFDownloadLink document={doc}>Download</PDFDownloadLink>
+      <ClientOnly>
+        <PDFDownloadLink document={doc}>Download</PDFDownloadLink>
+      </ClientOnly>
     </div>
   );
 }
