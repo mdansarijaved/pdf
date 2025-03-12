@@ -36,14 +36,12 @@ export default function Home() {
 
   return (
     <div>
-      <Suspense fallback={<div>Loading preview...</div>}>
-        {/* <PdfPreview /> */}
-        <PDFViewer className="w-full h-svh">{doc}</PDFViewer>
-      </Suspense>
+      {/* <Suspense fallback={<div>Loading preview...</div>}>
 
-      <Suspense fallback={<div>Loading preview...</div>}>
-        <PDFDownloadLink document={doc}>Download</PDFDownloadLink>
-      </Suspense>
+        <PDFViewer className="w-full h-svh">{doc}</PDFViewer>
+      </Suspense> */}
+
+      <PDFDownloadLink document={doc}>Download</PDFDownloadLink>
     </div>
   );
 }
